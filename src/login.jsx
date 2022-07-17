@@ -6,12 +6,62 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { auth } from './firebase/firebase';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState,useEffect } from 'react';
+import { Navigate,useNavigate  } from 'react-router-dom';
+import { Alert } from '@mui/material';
 
-export default function Login(){
+const LoginNotif = (login)=>{
+    if(login === 'success'){
+        return <Alert severity="success" sx={{mt: 5}}>Login success</Alert>
+    }
+    if(login === 'fail'){
+        return <Alert severity="error" sx={{mt: 5}}>Login failed</Alert>
+    }
+}
+export default function Login(props){
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [notif, setNotif] = useState('');
+    const navigate = useNavigate();
+    const {setUser} = props;
+    const handleLogin = () =>{
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                const userf= {
+                    uid: user.uid,
+                    email: user.email
+                }
+                setNotif('success');
+                setUser(true);
+                setLocalStr(userf);
+                setTimeout(()=>{
+                    navigate('/')
+                    console.log('pindah')
+                },[500])
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setNotif('fail')
+            });
+    }
+    const setLocalStr = (user) =>{
+        return(
+            localStorage.setItem("users", JSON.stringify(user))
+        )
+    }
+    useEffect(()=>{
+        
+    },[notif])
     return(
         <>
              <Container component="main" maxWidth="xs">
                 <CssBaseline />
+                {LoginNotif(notif)}
                     <Box
                     sx={{
                         marginTop: 8,
@@ -34,8 +84,8 @@ export default function Login(){
                             id="email"
                             label="Email Address"
                             name="email"
-                            autoComplete="email"
                             autoFocus
+                            onChange={(e) => setEmail(e.target.value)}
                             />
                             <TextField
                             margin="normal"
@@ -46,12 +96,14 @@ export default function Login(){
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            onChange={(e) => setPassword(e.target.value)}
                             />
                             <Button
-                            type="submit"
+                            type="button"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            onClick={()=> handleLogin()}
                             >
                             Sign In
                             </Button>
