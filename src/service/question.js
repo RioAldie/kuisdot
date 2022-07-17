@@ -2,7 +2,7 @@ import { async } from "@firebase/util";
 import axios from "axios";
 
 const ROOT_API = 'https://opentdb.com/api.php?';
-const AMOUNT = 'amount=10';
+const AMOUNT = 'amount=15';
 
 
 export async function GetQuestionSport(){

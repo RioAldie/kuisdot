@@ -5,10 +5,12 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { reducer, initialState } from '../service/reducer';
 
 export default function Question(props){
     const [value, setValue] = React.useState();
     const [ index, setIndex ] = React.useState(0);
+    const [state, dispatch] = React.useReducer(reducer, initialState);
     const { quest } = props;
     const [questActive, setQuestActive] = React.useState(quest[0]);
     
@@ -20,7 +22,7 @@ export default function Question(props){
         console.log(questActive.correct_answer);
         console.log(answer);
         handleNext();
-        
+        dispatch({type: 'increment'})
     }
     const handleQuest = (i) =>{
         const actived = quest[i];
@@ -51,7 +53,8 @@ export default function Question(props){
                         name="controlled-radio-buttons-group"
                         value={value}
                     >
-                        <FormControlLabel value={'True'} onClick={(e) => handleAnswer(e)} control={<Radio />} label="True" />
+                        {state.count}
+                        <FormControlLabel value={'True'} onClick={() => dispatch({type: 'increment'})} control={<Radio />} label="True" />
                         <FormControlLabel value={'False'} onClick={(e) => handleAnswer(e)} control={<Radio />} label="False" />
                     </RadioGroup>
                 </FormControl>
