@@ -5,6 +5,7 @@ import { useTimer } from 'react-timer-hook';
 import Question from "./components/question";
 import Side from "./components/side";
 import { GetQuestionSport } from "./service/question";
+import Result from "./components/result";
 
 const BoxStyled = styled(Box)({
     width:'60%',
@@ -31,17 +32,28 @@ const Content = (play, quest) =>{
     }
 }
 function MyTimer({ expiryTimestamp }) {
+    const [open, setOpen ] =  useState(false);
     const {
       seconds,
       minutes,
       hours,
       days
-    } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
+    } = useTimer({ expiryTimestamp, onExpire: () => setOpen(true)});
+    const handleResult = () =>{
+        if(open){
+            return <Result isOpen = {true}/>
+        }
+            
+    }
+    useEffect(()=>{
+        console.log(open);
+    },[open])
     return (
         <><div style={{ textAlign: 'center' }}>
             <Typography>
                 <span>{days}</span>:<span>{hours}</span>:<span>{minutes}</span>:<span>{seconds}</span>
             </Typography>
+            {handleResult()}
         </div>
         </>
       );
@@ -49,12 +61,13 @@ function MyTimer({ expiryTimestamp }) {
 const Timer = (play) =>{
     if(play){
         const time = new Date();
-        time.setSeconds(time.getSeconds() + 600);
+        time.setSeconds(time.getSeconds() + 10);
         return <MyTimer expiryTimestamp={time}/>
     }
     return null;
 }
 export default function Home(){
+    
     const [ quest, setQuest ] = useState([]);
     const [ play, setPlay ] = useState(false);
     const getListQuestSport = useCallback( async ()=>{
@@ -64,8 +77,6 @@ export default function Home(){
    
     const handlePlay = () =>{
         setPlay(true);
-        const time = new Date();
-        time.setSeconds(time.getSeconds() + 600);
     }
     useEffect(()=>{
         getListQuestSport();

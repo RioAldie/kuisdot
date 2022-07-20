@@ -34,8 +34,8 @@ export default function Question(props){
         let i = index + 1;
         setIndex(i);
         handleQuest(i);
-        
     }
+   
     
     React.useEffect(()=>{
         
@@ -56,7 +56,7 @@ export default function Question(props){
                         value={value}
                     >
                         {count}
-                        <FormControlLabel value={'True'} onClick={() => dispatch({type: 'increment'})} control={<Radio />} label="True" />
+                        <FormControlLabel value={'True'} onClick={(e) => handleAnswer(e)} control={<Radio />} label="True" />
                         <FormControlLabel value={'False'} onClick={(e) => handleAnswer(e)} control={<Radio />} label="False" />
                     </RadioGroup>
                 </FormControl>
