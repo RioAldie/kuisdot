@@ -3,6 +3,7 @@ import { useContext, useEffect, useReducer } from "react";
 import { useTimer } from 'react-timer-hook';
 import { AnswerContext } from "../service/context/answer";
 import { reducer, initialState } from "../service/reducer";
+import Result from "./result";
 
 
 export default function Side(){
@@ -17,10 +18,13 @@ export default function Side(){
         borderRadius: '10px',
         alignItems:'center'
     })
-    const time = new Date();
-    time.setSeconds(time.getSeconds() + 600);
+    const handleResult = () =>{
+        if(count >= 10){
+            return <Result isOpen ={true}/>
+        }
+    }
     useEffect(()=>{
-        console.log(count)
+        
     },[state])
     return(
         <>
@@ -34,6 +38,7 @@ export default function Side(){
                 <Box sx={{display:'flex', flexDirection:'row'}}>
                     <Typography variant="h5">Sisa : 0</Typography>
                 </Box>
+                {handleResult()}
         </>
     )
 }

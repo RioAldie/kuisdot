@@ -43,7 +43,6 @@ function MyTimer({ expiryTimestamp }) {
         if(open){
             return <Result isOpen = {true}/>
         }
-            
     }
     useEffect(()=>{
         console.log(open);
@@ -93,7 +92,7 @@ export default function Home(){
                     <BoxStyled>
                         {Content(play, quest)};
                     </BoxStyled>
-                    
+                    <Result isOpen = {true}/>
             </Box>
         </>
     )
