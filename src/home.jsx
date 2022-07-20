@@ -45,7 +45,7 @@ function MyTimer({ expiryTimestamp }) {
         }
     }
     useEffect(()=>{
-        console.log(open);
+       
     },[open])
     return (
         <><div style={{ textAlign: 'center' }}>
@@ -60,7 +60,7 @@ function MyTimer({ expiryTimestamp }) {
 const Timer = (play) =>{
     if(play){
         const time = new Date();
-        time.setSeconds(time.getSeconds() + 10);
+        time.setSeconds(time.getSeconds() + 100);
         return <MyTimer expiryTimestamp={time}/>
     }
     return null;
@@ -92,7 +92,7 @@ export default function Home(){
                     <BoxStyled>
                         {Content(play, quest)};
                     </BoxStyled>
-                    <Result isOpen = {true}/>
+                    
             </Box>
         </>
     )

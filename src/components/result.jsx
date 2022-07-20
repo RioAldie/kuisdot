@@ -2,7 +2,9 @@ import Box from '@mui/material/Box';
 import {Button} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { ScoreContext } from '../service/context/ScoreContext';
+import { AnswerContext } from '../service/context/answer';
 
 const style = {
     position: 'absolute',
@@ -20,7 +22,11 @@ const style = {
 export default function Result(props){
     const {isOpen} = props;
     const [open, setOpen] = useState(isOpen);
-
+    const [score, setScore] = useContext(ScoreContext);
+    const [count, setCount ] = useContext(AnswerContext);
+    useEffect(()=>{
+        
+    })
     const handleClose = () => setOpen(false);
     return(
         <>
@@ -35,15 +41,15 @@ export default function Result(props){
                     Quiz Result
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    Score : 10
+                    Score : {score}
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    Soal : 10
+                    Question : 10
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    Answer : 10
+                    Answer : {count}
                 </Typography>
-                <Button variant="contained" sx={{ mt: 2 }}>Play</Button>
+                <Button variant="contained" type='submit' sx={{ mt: 2 }}>Okay</Button>
                 </Box>
                 
             </Modal>

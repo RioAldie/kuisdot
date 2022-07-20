@@ -7,6 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { reducer, initialState } from '../service/reducer';
 import { AnswerContext } from '../service/context/answer';
+import { ScoreContext } from '../service/context/ScoreContext';
 
 export default function Question(props){
     const [value, setValue] = React.useState();
@@ -14,12 +15,13 @@ export default function Question(props){
     const [state, dispatch] = React.useReducer(reducer, initialState);
     const { quest } = props;
     const [questActive, setQuestActive] = React.useState(quest[0]);
+    const [score, setScore] = React.useContext(ScoreContext);
     const [count, setCount] = React.useContext(AnswerContext);
     
     const handleAnswer =(e) =>{
         const answer =  e.target.value;
         if(questActive.correct_answer === answer ){
-            console.log('benar');
+            setScore(score + 1);
         }
         console.log(questActive.correct_answer);
         console.log(answer);
@@ -38,8 +40,8 @@ export default function Question(props){
    
     
     React.useEffect(()=>{
-        
-    },[index])
+        console.log('scores: ',score);
+    },[index, score])
     return(
         <>
              <Box>
