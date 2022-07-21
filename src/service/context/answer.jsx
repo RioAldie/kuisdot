@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 
 const AnswerContextDefaultValue = {
-    count : 1,
+    count : 0,
     setCount: state => {}
 }
 

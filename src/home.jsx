@@ -60,7 +60,7 @@ function MyTimer({ expiryTimestamp }) {
 const Timer = (play) =>{
     if(play){
         const time = new Date();
-        time.setSeconds(time.getSeconds() + 100);
+        time.setSeconds(time.getSeconds() + 30);
         return <MyTimer expiryTimestamp={time}/>
     }
     return null;

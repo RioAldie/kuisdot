@@ -24,10 +24,37 @@ export default function Result(props){
     const [open, setOpen] = useState(isOpen);
     const [score, setScore] = useContext(ScoreContext);
     const [count, setCount ] = useContext(AnswerContext);
+    const [data, setData] = useState([]);
+    
     useEffect(()=>{
         
-    })
+       getDataRes(); 
+    },[])
     const handleClose = () => setOpen(false);
+    const setHistoryRes = (newRes)=>{
+        return localStorage.setItem('results',JSON.stringify(newRes))
+    }
+    const getDataRes = () =>{
+        const lastRes = JSON.parse(localStorage.getItem('result'));
+        setData(lastRes);
+    }
+    const handleRestart = () =>{
+        const getDate = new Date().toLocaleDateString();
+        const newRes = {
+            id: getDate,
+            score: score,
+            quest: 10,
+            answer: count
+        }
+       
+        data.push(newRes)
+            localStorage.setItem("result", JSON.stringify(data))
+        
+        setTimeout(()=>{
+            window.location.reload(true);
+        },[300])
+        
+    }
     return(
         <>
              <Modal
@@ -49,7 +76,7 @@ export default function Result(props){
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                     Answer : {count}
                 </Typography>
-                <Button variant="contained" type='submit' sx={{ mt: 2 }}>Okay</Button>
+                <Button variant="contained" sx={{ mt: 2 }} onClick={() => handleRestart()}>Play Again</Button>
                 </Box>
                 
             </Modal>
