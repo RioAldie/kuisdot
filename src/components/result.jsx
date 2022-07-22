@@ -36,23 +36,27 @@ export default function Result(props){
     }
     const getDataRes = () =>{
         const lastRes = JSON.parse(localStorage.getItem('result'));
+        if(lastRes === null){
+            return null
+        }
         setData(lastRes);
     }
-    const handleRestart = () =>{
-        const getDate = new Date().toLocaleDateString();
-        const newRes = {
-            id: getDate,
-            score: score,
-            quest: 10,
-            answer: count
-        }
-       
-        data.push(newRes)
-            localStorage.setItem("result", JSON.stringify(data))
+    const handleRestart =  () =>{
+      
+            const getDate = new Date().getTime();
+            const newRes = {
+                id: getDate,
+                score: score,
+                quest: 10,
+                answer: count
+            }
         
-        setTimeout(()=>{
-            window.location.reload(true);
-        },[300])
+                data.push(newRes);
+                localStorage.setItem("result", JSON.stringify(data))
+            setTimeout(()=>{
+                window.location.reload(true);
+            },[500])
+      
         
     }
     return(

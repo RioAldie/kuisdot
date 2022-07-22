@@ -6,6 +6,7 @@ import Question from "./components/question";
 import Side from "./components/side";
 import { GetQuestionSport } from "./service/question";
 import Result from "./components/result";
+import History from "./components/history";
 
 const BoxStyled = styled(Box)({
     width:'60%',
@@ -63,6 +64,9 @@ const Timer = (play) =>{
         time.setSeconds(time.getSeconds() + 30);
         return <MyTimer expiryTimestamp={time}/>
     }
+    if(!play){
+        
+    }
     return null;
 }
 export default function Home(){
@@ -80,20 +84,25 @@ export default function Home(){
     useEffect(()=>{
         getListQuestSport();
     },[])
-    
+    const playButton = ()=>{
+        if(play){
+            return <Button variant="contained" onClick={(e) => handlePlay()} sx={{display:'none'}}>Play</Button>
+        }
+        return <Button variant="contained" onClick={(e) => handlePlay()} >Play</Button>
+    }
     return(
         <>
-            <Box sx={{ width: '100%', height:'80vh', border:'solid black 1px',display:'flex', flexDirection:'row', justifyContent:'space-around'}}>
+            <Box sx={{ width: '100%', height:'80vh',display:'flex', flexDirection:'row', justifyContent:'space-around'}}>
                     <BoxSide>
                         <Side/>
                         { Timer(play)}
-                        <Button variant="contained" onClick={(e) => handlePlay()} >Play</Button>
+                        {playButton()}
                     </BoxSide>
                     <BoxStyled>
                         {Content(play, quest)};
                     </BoxStyled>
-                    
             </Box>
+            <History/>
         </>
     )
 }
